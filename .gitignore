@@ -2,3 +2,7 @@
 /__pycache__/l
 /__pycache__/
 /venv/
+/example/
+/.pre-commit-config.yaml
+/main
+/main_1
