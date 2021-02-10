@@ -1,0 +1,2976 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> <empty>
+Rule 2     program -> function
+Rule 3     program -> program function
+Rule 4     function -> func_header func_body
+Rule 5     func_header -> VARIABLE_TYPE FUNCDECL LPAR args RPAR
+Rule 6     args -> <empty>
+Rule 7     args -> expr
+Rule 8     args -> args COMMA expr
+Rule 9     func_body -> block
+Rule 10    block -> LCURL body RCURL
+Rule 11    body -> <empty>
+Rule 12    body -> body line semicolons
+Rule 13    body -> body multiline
+Rule 14    semicolons -> SEMICOLON
+Rule 15    semicolons -> semicolons SEMICOLON
+Rule 16    multiline -> if_statement
+Rule 17    multiline -> while_statement
+Rule 18    multiline -> for_statement
+Rule 19    line -> modal_function
+Rule 20    line -> init
+Rule 21    line -> func
+Rule 22    line -> assign
+Rule 23    modal_function -> RETURN arg
+Rule 24    modal_function -> BREAK
+Rule 25    modal_function -> CONTINUE
+Rule 26    var_cal -> ID LCUADR expr RCUADR
+Rule 27    if_statement -> IF LPAR condition RPAR block
+Rule 28    if_statement -> if_statement ELSE block
+Rule 29    while_statement -> WHILE LPAR condition RPAR block
+Rule 30    for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block
+Rule 31    change_val -> ID expr
+Rule 32    condition -> expr cond_sign expr
+Rule 33    cond_sign -> DEQUAL
+Rule 34    cond_sign -> GT
+Rule 35    cond_sign -> LT
+Rule 36    cond_sign -> GE
+Rule 37    cond_sign -> LE
+Rule 38    cond_sign -> NOTEQUAL
+Rule 39    init -> <empty>
+Rule 40    init -> VARIABLE_TYPE ID
+Rule 41    init -> VARIABLE_TYPE ID EQUAL ID DIVMUL NUMBER
+Rule 42    init -> VARIABLE_TYPE ID EQUAL expr
+Rule 43    init -> VARIABLE_TYPE ID EQUAL var_cal
+Rule 44    init -> VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init
+Rule 45    array_init -> LCURL init_block RCURL
+Rule 46    init_block -> arg
+Rule 47    init_block -> arg COMMA
+Rule 48    init_block -> init_block arg
+Rule 49    init_block -> init_block arg COMMA
+Rule 50    assign -> ID EQUAL expr
+Rule 51    assign -> ID EQUAL var_cal
+Rule 52    assign -> var_cal EQUAL expr
+Rule 53    assign -> var_cal EQUAL var_cal
+Rule 54    assign -> ID expr
+Rule 55    func -> CUSTOM_FUNC LPAR args RPAR
+Rule 56    func -> ID LPAR args RPAR
+Rule 57    func -> BUILD_IN LPAR args RPAR
+Rule 58    func -> BUILD_IN output_operator
+Rule 59    output_operator -> LT LT arg
+Rule 60    output_operator -> LT LT BUILD_IN
+Rule 61    output_operator -> LT LT ID
+Rule 62    expr -> fact
+Rule 63    expr -> PLUSMINUS PLUSMINUS
+Rule 64    expr -> expr PLUSMINUS fact
+Rule 65    expr -> expr MOD fact
+Rule 66    expr -> ID
+Rule 67    fact -> term
+Rule 68    fact -> fact DIVMUL term
+Rule 69    term -> arg
+Rule 70    term -> LPAR expr RPAR
+Rule 71    arg -> NUMBER
+Rule 72    arg -> STRING
+Rule 73    arg -> VARIABLE_TYPE ID
+Rule 74    arg -> VARIABLE_TYPE ID LCUADR RCUADR
+Rule 75    arg -> ID LCUADR RCUADR
+Rule 76    arg -> var_cal
+Rule 77    arg -> NUMBER ID
+Rule 78    arg -> func
+
+Terminals, with rules where they appear
+
+BREAK                : 24
+BUILD_IN             : 57 58 60
+COMMA                : 8 47 49
+CONTINUE             : 25
+CUSTOM_FUNC          : 55
+DEQUAL               : 33
+DIVMUL               : 41 68
+ELSE                 : 28
+EQUAL                : 41 42 43 44 50 51 52 53
+FOR                  : 30
+FUNCDECL             : 5
+GE                   : 36
+GT                   : 34
+ID                   : 26 31 40 41 41 42 43 44 50 51 54 56 61 66 73 74 75 77
+IF                   : 27
+LCUADR               : 26 44 74 75
+LCURL                : 10 45
+LE                   : 37
+LPAR                 : 5 27 29 30 55 56 57 70
+LT                   : 35 59 59 60 60 61 61
+MOD                  : 65
+NOTEQUAL             : 38
+NUMBER               : 41 71 77
+PLUSMINUS            : 63 63 64
+RCUADR               : 26 44 74 75
+RCURL                : 10 45
+RETURN               : 23
+RPAR                 : 5 27 29 30 55 56 57 70
+SEMICOLON            : 14 15 30 30
+STRING               : 72
+VARIABLE_TYPE        : 5 40 41 42 43 44 73 74
+WHILE                : 29
+error                : 
+
+Nonterminals, with rules where they appear
+
+arg                  : 23 46 47 48 49 59 69
+args                 : 5 8 55 56 57
+array_init           : 44
+assign               : 22
+block                : 9 27 28 29 30
+body                 : 10 12 13
+change_val           : 30
+cond_sign            : 32
+condition            : 27 29 30
+expr                 : 7 8 26 31 32 32 42 50 52 54 64 65 70
+fact                 : 62 64 65 68
+for_statement        : 18
+func                 : 21 78
+func_body            : 4
+func_header          : 4
+function             : 2 3
+if_statement         : 16 28
+init                 : 20 30
+init_block           : 45 48 49
+line                 : 12
+modal_function       : 19
+multiline            : 13
+output_operator      : 58
+program              : 3 0
+semicolons           : 12 15
+term                 : 67 68
+var_cal              : 43 51 52 53 53 76
+while_statement      : 17
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> .
+    (2) program -> . function
+    (3) program -> . program function
+    (4) function -> . func_header func_body
+    (5) func_header -> . VARIABLE_TYPE FUNCDECL LPAR args RPAR
+
+  ! shift/reduce conflict for VARIABLE_TYPE resolved as shift
+    $end            reduce using rule 1 (program -> .)
+    VARIABLE_TYPE   shift and go to state 4
+
+  ! VARIABLE_TYPE   [ reduce using rule 1 (program -> .) ]
+
+    program                        shift and go to state 1
+    function                       shift and go to state 2
+    func_header                    shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+    (3) program -> program . function
+    (4) function -> . func_header func_body
+    (5) func_header -> . VARIABLE_TYPE FUNCDECL LPAR args RPAR
+
+    VARIABLE_TYPE   shift and go to state 4
+
+    function                       shift and go to state 5
+    func_header                    shift and go to state 3
+
+state 2
+
+    (2) program -> function .
+
+    VARIABLE_TYPE   reduce using rule 2 (program -> function .)
+    $end            reduce using rule 2 (program -> function .)
+
+
+state 3
+
+    (4) function -> func_header . func_body
+    (9) func_body -> . block
+    (10) block -> . LCURL body RCURL
+
+    LCURL           shift and go to state 8
+
+    func_body                      shift and go to state 6
+    block                          shift and go to state 7
+
+state 4
+
+    (5) func_header -> VARIABLE_TYPE . FUNCDECL LPAR args RPAR
+
+    FUNCDECL        shift and go to state 9
+
+
+state 5
+
+    (3) program -> program function .
+
+    VARIABLE_TYPE   reduce using rule 3 (program -> program function .)
+    $end            reduce using rule 3 (program -> program function .)
+
+
+state 6
+
+    (4) function -> func_header func_body .
+
+    VARIABLE_TYPE   reduce using rule 4 (function -> func_header func_body .)
+    $end            reduce using rule 4 (function -> func_header func_body .)
+
+
+state 7
+
+    (9) func_body -> block .
+
+    VARIABLE_TYPE   reduce using rule 9 (func_body -> block .)
+    $end            reduce using rule 9 (func_body -> block .)
+
+
+state 8
+
+    (10) block -> LCURL . body RCURL
+    (11) body -> .
+    (12) body -> . body line semicolons
+    (13) body -> . body multiline
+
+    RCURL           reduce using rule 11 (body -> .)
+    RETURN          reduce using rule 11 (body -> .)
+    BREAK           reduce using rule 11 (body -> .)
+    CONTINUE        reduce using rule 11 (body -> .)
+    VARIABLE_TYPE   reduce using rule 11 (body -> .)
+    CUSTOM_FUNC     reduce using rule 11 (body -> .)
+    ID              reduce using rule 11 (body -> .)
+    BUILD_IN        reduce using rule 11 (body -> .)
+    IF              reduce using rule 11 (body -> .)
+    WHILE           reduce using rule 11 (body -> .)
+    FOR             reduce using rule 11 (body -> .)
+    SEMICOLON       reduce using rule 11 (body -> .)
+
+    body                           shift and go to state 10
+
+state 9
+
+    (5) func_header -> VARIABLE_TYPE FUNCDECL . LPAR args RPAR
+
+    LPAR            shift and go to state 11
+
+
+state 10
+
+    (10) block -> LCURL body . RCURL
+    (12) body -> body . line semicolons
+    (13) body -> body . multiline
+    (19) line -> . modal_function
+    (20) line -> . init
+    (21) line -> . func
+    (22) line -> . assign
+    (16) multiline -> . if_statement
+    (17) multiline -> . while_statement
+    (18) multiline -> . for_statement
+    (23) modal_function -> . RETURN arg
+    (24) modal_function -> . BREAK
+    (25) modal_function -> . CONTINUE
+    (39) init -> .
+    (40) init -> . VARIABLE_TYPE ID
+    (41) init -> . VARIABLE_TYPE ID EQUAL ID DIVMUL NUMBER
+    (42) init -> . VARIABLE_TYPE ID EQUAL expr
+    (43) init -> . VARIABLE_TYPE ID EQUAL var_cal
+    (44) init -> . VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+    (50) assign -> . ID EQUAL expr
+    (51) assign -> . ID EQUAL var_cal
+    (52) assign -> . var_cal EQUAL expr
+    (53) assign -> . var_cal EQUAL var_cal
+    (54) assign -> . ID expr
+    (27) if_statement -> . IF LPAR condition RPAR block
+    (28) if_statement -> . if_statement ELSE block
+    (29) while_statement -> . WHILE LPAR condition RPAR block
+    (30) for_statement -> . FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block
+    (26) var_cal -> . ID LCUADR expr RCUADR
+
+    RCURL           shift and go to state 12
+    RETURN          shift and go to state 22
+    BREAK           shift and go to state 23
+    CONTINUE        shift and go to state 24
+    SEMICOLON       reduce using rule 39 (init -> .)
+    VARIABLE_TYPE   shift and go to state 25
+    CUSTOM_FUNC     shift and go to state 28
+    ID              shift and go to state 26
+    BUILD_IN        shift and go to state 29
+    IF              shift and go to state 30
+    WHILE           shift and go to state 31
+    FOR             shift and go to state 32
+
+    line                           shift and go to state 13
+    multiline                      shift and go to state 14
+    modal_function                 shift and go to state 15
+    init                           shift and go to state 16
+    func                           shift and go to state 17
+    assign                         shift and go to state 18
+    if_statement                   shift and go to state 19
+    while_statement                shift and go to state 20
+    for_statement                  shift and go to state 21
+    var_cal                        shift and go to state 27
+
+state 11
+
+    (5) func_header -> VARIABLE_TYPE FUNCDECL LPAR . args RPAR
+    (6) args -> .
+    (7) args -> . expr
+    (8) args -> . args COMMA expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RPAR            reduce using rule 6 (args -> .)
+    COMMA           reduce using rule 6 (args -> .)
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    args                           shift and go to state 35
+    expr                           shift and go to state 36
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 12
+
+    (10) block -> LCURL body RCURL .
+
+    VARIABLE_TYPE   reduce using rule 10 (block -> LCURL body RCURL .)
+    $end            reduce using rule 10 (block -> LCURL body RCURL .)
+    ELSE            reduce using rule 10 (block -> LCURL body RCURL .)
+    RCURL           reduce using rule 10 (block -> LCURL body RCURL .)
+    RETURN          reduce using rule 10 (block -> LCURL body RCURL .)
+    BREAK           reduce using rule 10 (block -> LCURL body RCURL .)
+    CONTINUE        reduce using rule 10 (block -> LCURL body RCURL .)
+    CUSTOM_FUNC     reduce using rule 10 (block -> LCURL body RCURL .)
+    ID              reduce using rule 10 (block -> LCURL body RCURL .)
+    BUILD_IN        reduce using rule 10 (block -> LCURL body RCURL .)
+    IF              reduce using rule 10 (block -> LCURL body RCURL .)
+    WHILE           reduce using rule 10 (block -> LCURL body RCURL .)
+    FOR             reduce using rule 10 (block -> LCURL body RCURL .)
+    SEMICOLON       reduce using rule 10 (block -> LCURL body RCURL .)
+
+
+state 13
+
+    (12) body -> body line . semicolons
+    (14) semicolons -> . SEMICOLON
+    (15) semicolons -> . semicolons SEMICOLON
+
+    SEMICOLON       shift and go to state 47
+
+    semicolons                     shift and go to state 46
+
+state 14
+
+    (13) body -> body multiline .
+
+    RCURL           reduce using rule 13 (body -> body multiline .)
+    RETURN          reduce using rule 13 (body -> body multiline .)
+    BREAK           reduce using rule 13 (body -> body multiline .)
+    CONTINUE        reduce using rule 13 (body -> body multiline .)
+    VARIABLE_TYPE   reduce using rule 13 (body -> body multiline .)
+    CUSTOM_FUNC     reduce using rule 13 (body -> body multiline .)
+    ID              reduce using rule 13 (body -> body multiline .)
+    BUILD_IN        reduce using rule 13 (body -> body multiline .)
+    IF              reduce using rule 13 (body -> body multiline .)
+    WHILE           reduce using rule 13 (body -> body multiline .)
+    FOR             reduce using rule 13 (body -> body multiline .)
+    SEMICOLON       reduce using rule 13 (body -> body multiline .)
+
+
+state 15
+
+    (19) line -> modal_function .
+
+    SEMICOLON       reduce using rule 19 (line -> modal_function .)
+
+
+state 16
+
+    (20) line -> init .
+
+    SEMICOLON       reduce using rule 20 (line -> init .)
+
+
+state 17
+
+    (21) line -> func .
+
+    SEMICOLON       reduce using rule 21 (line -> func .)
+
+
+state 18
+
+    (22) line -> assign .
+
+    SEMICOLON       reduce using rule 22 (line -> assign .)
+
+
+state 19
+
+    (16) multiline -> if_statement .
+    (28) if_statement -> if_statement . ELSE block
+
+    RCURL           reduce using rule 16 (multiline -> if_statement .)
+    RETURN          reduce using rule 16 (multiline -> if_statement .)
+    BREAK           reduce using rule 16 (multiline -> if_statement .)
+    CONTINUE        reduce using rule 16 (multiline -> if_statement .)
+    VARIABLE_TYPE   reduce using rule 16 (multiline -> if_statement .)
+    CUSTOM_FUNC     reduce using rule 16 (multiline -> if_statement .)
+    ID              reduce using rule 16 (multiline -> if_statement .)
+    BUILD_IN        reduce using rule 16 (multiline -> if_statement .)
+    IF              reduce using rule 16 (multiline -> if_statement .)
+    WHILE           reduce using rule 16 (multiline -> if_statement .)
+    FOR             reduce using rule 16 (multiline -> if_statement .)
+    SEMICOLON       reduce using rule 16 (multiline -> if_statement .)
+    ELSE            shift and go to state 48
+
+
+state 20
+
+    (17) multiline -> while_statement .
+
+    RCURL           reduce using rule 17 (multiline -> while_statement .)
+    RETURN          reduce using rule 17 (multiline -> while_statement .)
+    BREAK           reduce using rule 17 (multiline -> while_statement .)
+    CONTINUE        reduce using rule 17 (multiline -> while_statement .)
+    VARIABLE_TYPE   reduce using rule 17 (multiline -> while_statement .)
+    CUSTOM_FUNC     reduce using rule 17 (multiline -> while_statement .)
+    ID              reduce using rule 17 (multiline -> while_statement .)
+    BUILD_IN        reduce using rule 17 (multiline -> while_statement .)
+    IF              reduce using rule 17 (multiline -> while_statement .)
+    WHILE           reduce using rule 17 (multiline -> while_statement .)
+    FOR             reduce using rule 17 (multiline -> while_statement .)
+    SEMICOLON       reduce using rule 17 (multiline -> while_statement .)
+
+
+state 21
+
+    (18) multiline -> for_statement .
+
+    RCURL           reduce using rule 18 (multiline -> for_statement .)
+    RETURN          reduce using rule 18 (multiline -> for_statement .)
+    BREAK           reduce using rule 18 (multiline -> for_statement .)
+    CONTINUE        reduce using rule 18 (multiline -> for_statement .)
+    VARIABLE_TYPE   reduce using rule 18 (multiline -> for_statement .)
+    CUSTOM_FUNC     reduce using rule 18 (multiline -> for_statement .)
+    ID              reduce using rule 18 (multiline -> for_statement .)
+    BUILD_IN        reduce using rule 18 (multiline -> for_statement .)
+    IF              reduce using rule 18 (multiline -> for_statement .)
+    WHILE           reduce using rule 18 (multiline -> for_statement .)
+    FOR             reduce using rule 18 (multiline -> for_statement .)
+    SEMICOLON       reduce using rule 18 (multiline -> for_statement .)
+
+
+state 22
+
+    (23) modal_function -> RETURN . arg
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    arg                            shift and go to state 49
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 23
+
+    (24) modal_function -> BREAK .
+
+    SEMICOLON       reduce using rule 24 (modal_function -> BREAK .)
+
+
+state 24
+
+    (25) modal_function -> CONTINUE .
+
+    SEMICOLON       reduce using rule 25 (modal_function -> CONTINUE .)
+
+
+state 25
+
+    (40) init -> VARIABLE_TYPE . ID
+    (41) init -> VARIABLE_TYPE . ID EQUAL ID DIVMUL NUMBER
+    (42) init -> VARIABLE_TYPE . ID EQUAL expr
+    (43) init -> VARIABLE_TYPE . ID EQUAL var_cal
+    (44) init -> VARIABLE_TYPE . ID LCUADR RCUADR EQUAL array_init
+
+    ID              shift and go to state 51
+
+
+state 26
+
+    (56) func -> ID . LPAR args RPAR
+    (50) assign -> ID . EQUAL expr
+    (51) assign -> ID . EQUAL var_cal
+    (54) assign -> ID . expr
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    LPAR            shift and go to state 52
+    EQUAL           shift and go to state 53
+    LCUADR          shift and go to state 55
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 54
+    var_cal                        shift and go to state 44
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    func                           shift and go to state 45
+
+state 27
+
+    (52) assign -> var_cal . EQUAL expr
+    (53) assign -> var_cal . EQUAL var_cal
+
+    EQUAL           shift and go to state 56
+
+
+state 28
+
+    (55) func -> CUSTOM_FUNC . LPAR args RPAR
+
+    LPAR            shift and go to state 57
+
+
+state 29
+
+    (57) func -> BUILD_IN . LPAR args RPAR
+    (58) func -> BUILD_IN . output_operator
+    (59) output_operator -> . LT LT arg
+    (60) output_operator -> . LT LT BUILD_IN
+    (61) output_operator -> . LT LT ID
+
+    LPAR            shift and go to state 58
+    LT              shift and go to state 60
+
+    output_operator                shift and go to state 59
+
+state 30
+
+    (27) if_statement -> IF . LPAR condition RPAR block
+
+    LPAR            shift and go to state 61
+
+
+state 31
+
+    (29) while_statement -> WHILE . LPAR condition RPAR block
+
+    LPAR            shift and go to state 62
+
+
+state 32
+
+    (30) for_statement -> FOR . LPAR init SEMICOLON condition SEMICOLON change_val RPAR block
+
+    LPAR            shift and go to state 63
+
+
+state 33
+
+    (73) arg -> VARIABLE_TYPE . ID
+    (74) arg -> VARIABLE_TYPE . ID LCUADR RCUADR
+
+    ID              shift and go to state 64
+
+
+state 34
+
+    (70) term -> LPAR . expr RPAR
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 65
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 35
+
+    (5) func_header -> VARIABLE_TYPE FUNCDECL LPAR args . RPAR
+    (8) args -> args . COMMA expr
+
+    RPAR            shift and go to state 66
+    COMMA           shift and go to state 67
+
+
+state 36
+
+    (7) args -> expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RPAR            reduce using rule 7 (args -> expr .)
+    COMMA           reduce using rule 7 (args -> expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 37
+
+    (62) expr -> fact .
+    (68) fact -> fact . DIVMUL term
+
+    PLUSMINUS       reduce using rule 62 (expr -> fact .)
+    MOD             reduce using rule 62 (expr -> fact .)
+    RPAR            reduce using rule 62 (expr -> fact .)
+    COMMA           reduce using rule 62 (expr -> fact .)
+    SEMICOLON       reduce using rule 62 (expr -> fact .)
+    RCUADR          reduce using rule 62 (expr -> fact .)
+    DEQUAL          reduce using rule 62 (expr -> fact .)
+    GT              reduce using rule 62 (expr -> fact .)
+    LT              reduce using rule 62 (expr -> fact .)
+    GE              reduce using rule 62 (expr -> fact .)
+    LE              reduce using rule 62 (expr -> fact .)
+    NOTEQUAL        reduce using rule 62 (expr -> fact .)
+    DIVMUL          shift and go to state 70
+
+
+state 38
+
+    (63) expr -> PLUSMINUS . PLUSMINUS
+
+    PLUSMINUS       shift and go to state 71
+
+
+state 39
+
+    (66) expr -> ID .
+    (75) arg -> ID . LCUADR RCUADR
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (56) func -> ID . LPAR args RPAR
+
+    PLUSMINUS       reduce using rule 66 (expr -> ID .)
+    MOD             reduce using rule 66 (expr -> ID .)
+    RPAR            reduce using rule 66 (expr -> ID .)
+    COMMA           reduce using rule 66 (expr -> ID .)
+    SEMICOLON       reduce using rule 66 (expr -> ID .)
+    RCUADR          reduce using rule 66 (expr -> ID .)
+    DEQUAL          reduce using rule 66 (expr -> ID .)
+    GT              reduce using rule 66 (expr -> ID .)
+    LT              reduce using rule 66 (expr -> ID .)
+    GE              reduce using rule 66 (expr -> ID .)
+    LE              reduce using rule 66 (expr -> ID .)
+    NOTEQUAL        reduce using rule 66 (expr -> ID .)
+    LCUADR          shift and go to state 72
+    LPAR            shift and go to state 73
+
+
+state 40
+
+    (67) fact -> term .
+
+    DIVMUL          reduce using rule 67 (fact -> term .)
+    PLUSMINUS       reduce using rule 67 (fact -> term .)
+    MOD             reduce using rule 67 (fact -> term .)
+    RPAR            reduce using rule 67 (fact -> term .)
+    COMMA           reduce using rule 67 (fact -> term .)
+    SEMICOLON       reduce using rule 67 (fact -> term .)
+    RCUADR          reduce using rule 67 (fact -> term .)
+    DEQUAL          reduce using rule 67 (fact -> term .)
+    GT              reduce using rule 67 (fact -> term .)
+    LT              reduce using rule 67 (fact -> term .)
+    GE              reduce using rule 67 (fact -> term .)
+    LE              reduce using rule 67 (fact -> term .)
+    NOTEQUAL        reduce using rule 67 (fact -> term .)
+
+
+state 41
+
+    (69) term -> arg .
+
+    DIVMUL          reduce using rule 69 (term -> arg .)
+    PLUSMINUS       reduce using rule 69 (term -> arg .)
+    MOD             reduce using rule 69 (term -> arg .)
+    RPAR            reduce using rule 69 (term -> arg .)
+    COMMA           reduce using rule 69 (term -> arg .)
+    SEMICOLON       reduce using rule 69 (term -> arg .)
+    RCUADR          reduce using rule 69 (term -> arg .)
+    DEQUAL          reduce using rule 69 (term -> arg .)
+    GT              reduce using rule 69 (term -> arg .)
+    LT              reduce using rule 69 (term -> arg .)
+    GE              reduce using rule 69 (term -> arg .)
+    LE              reduce using rule 69 (term -> arg .)
+    NOTEQUAL        reduce using rule 69 (term -> arg .)
+
+
+state 42
+
+    (71) arg -> NUMBER .
+    (77) arg -> NUMBER . ID
+
+  ! shift/reduce conflict for ID resolved as shift
+    DIVMUL          reduce using rule 71 (arg -> NUMBER .)
+    PLUSMINUS       reduce using rule 71 (arg -> NUMBER .)
+    MOD             reduce using rule 71 (arg -> NUMBER .)
+    RPAR            reduce using rule 71 (arg -> NUMBER .)
+    COMMA           reduce using rule 71 (arg -> NUMBER .)
+    SEMICOLON       reduce using rule 71 (arg -> NUMBER .)
+    RCUADR          reduce using rule 71 (arg -> NUMBER .)
+    DEQUAL          reduce using rule 71 (arg -> NUMBER .)
+    GT              reduce using rule 71 (arg -> NUMBER .)
+    LT              reduce using rule 71 (arg -> NUMBER .)
+    GE              reduce using rule 71 (arg -> NUMBER .)
+    LE              reduce using rule 71 (arg -> NUMBER .)
+    NOTEQUAL        reduce using rule 71 (arg -> NUMBER .)
+    RCURL           reduce using rule 71 (arg -> NUMBER .)
+    NUMBER          reduce using rule 71 (arg -> NUMBER .)
+    STRING          reduce using rule 71 (arg -> NUMBER .)
+    VARIABLE_TYPE   reduce using rule 71 (arg -> NUMBER .)
+    CUSTOM_FUNC     reduce using rule 71 (arg -> NUMBER .)
+    BUILD_IN        reduce using rule 71 (arg -> NUMBER .)
+    ID              shift and go to state 74
+
+  ! ID              [ reduce using rule 71 (arg -> NUMBER .) ]
+
+
+state 43
+
+    (72) arg -> STRING .
+
+    DIVMUL          reduce using rule 72 (arg -> STRING .)
+    PLUSMINUS       reduce using rule 72 (arg -> STRING .)
+    MOD             reduce using rule 72 (arg -> STRING .)
+    RPAR            reduce using rule 72 (arg -> STRING .)
+    COMMA           reduce using rule 72 (arg -> STRING .)
+    SEMICOLON       reduce using rule 72 (arg -> STRING .)
+    RCUADR          reduce using rule 72 (arg -> STRING .)
+    DEQUAL          reduce using rule 72 (arg -> STRING .)
+    GT              reduce using rule 72 (arg -> STRING .)
+    LT              reduce using rule 72 (arg -> STRING .)
+    GE              reduce using rule 72 (arg -> STRING .)
+    LE              reduce using rule 72 (arg -> STRING .)
+    NOTEQUAL        reduce using rule 72 (arg -> STRING .)
+    RCURL           reduce using rule 72 (arg -> STRING .)
+    NUMBER          reduce using rule 72 (arg -> STRING .)
+    STRING          reduce using rule 72 (arg -> STRING .)
+    VARIABLE_TYPE   reduce using rule 72 (arg -> STRING .)
+    ID              reduce using rule 72 (arg -> STRING .)
+    CUSTOM_FUNC     reduce using rule 72 (arg -> STRING .)
+    BUILD_IN        reduce using rule 72 (arg -> STRING .)
+
+
+state 44
+
+    (76) arg -> var_cal .
+
+    DIVMUL          reduce using rule 76 (arg -> var_cal .)
+    PLUSMINUS       reduce using rule 76 (arg -> var_cal .)
+    MOD             reduce using rule 76 (arg -> var_cal .)
+    RPAR            reduce using rule 76 (arg -> var_cal .)
+    COMMA           reduce using rule 76 (arg -> var_cal .)
+    SEMICOLON       reduce using rule 76 (arg -> var_cal .)
+    RCUADR          reduce using rule 76 (arg -> var_cal .)
+    DEQUAL          reduce using rule 76 (arg -> var_cal .)
+    GT              reduce using rule 76 (arg -> var_cal .)
+    LT              reduce using rule 76 (arg -> var_cal .)
+    GE              reduce using rule 76 (arg -> var_cal .)
+    LE              reduce using rule 76 (arg -> var_cal .)
+    NOTEQUAL        reduce using rule 76 (arg -> var_cal .)
+    RCURL           reduce using rule 76 (arg -> var_cal .)
+    NUMBER          reduce using rule 76 (arg -> var_cal .)
+    STRING          reduce using rule 76 (arg -> var_cal .)
+    VARIABLE_TYPE   reduce using rule 76 (arg -> var_cal .)
+    ID              reduce using rule 76 (arg -> var_cal .)
+    CUSTOM_FUNC     reduce using rule 76 (arg -> var_cal .)
+    BUILD_IN        reduce using rule 76 (arg -> var_cal .)
+
+
+state 45
+
+    (78) arg -> func .
+
+    DIVMUL          reduce using rule 78 (arg -> func .)
+    PLUSMINUS       reduce using rule 78 (arg -> func .)
+    MOD             reduce using rule 78 (arg -> func .)
+    RPAR            reduce using rule 78 (arg -> func .)
+    COMMA           reduce using rule 78 (arg -> func .)
+    SEMICOLON       reduce using rule 78 (arg -> func .)
+    RCUADR          reduce using rule 78 (arg -> func .)
+    DEQUAL          reduce using rule 78 (arg -> func .)
+    GT              reduce using rule 78 (arg -> func .)
+    LT              reduce using rule 78 (arg -> func .)
+    GE              reduce using rule 78 (arg -> func .)
+    LE              reduce using rule 78 (arg -> func .)
+    NOTEQUAL        reduce using rule 78 (arg -> func .)
+    RCURL           reduce using rule 78 (arg -> func .)
+    NUMBER          reduce using rule 78 (arg -> func .)
+    STRING          reduce using rule 78 (arg -> func .)
+    VARIABLE_TYPE   reduce using rule 78 (arg -> func .)
+    ID              reduce using rule 78 (arg -> func .)
+    CUSTOM_FUNC     reduce using rule 78 (arg -> func .)
+    BUILD_IN        reduce using rule 78 (arg -> func .)
+
+
+state 46
+
+    (12) body -> body line semicolons .
+    (15) semicolons -> semicolons . SEMICOLON
+
+  ! shift/reduce conflict for SEMICOLON resolved as shift
+    RCURL           reduce using rule 12 (body -> body line semicolons .)
+    RETURN          reduce using rule 12 (body -> body line semicolons .)
+    BREAK           reduce using rule 12 (body -> body line semicolons .)
+    CONTINUE        reduce using rule 12 (body -> body line semicolons .)
+    VARIABLE_TYPE   reduce using rule 12 (body -> body line semicolons .)
+    CUSTOM_FUNC     reduce using rule 12 (body -> body line semicolons .)
+    ID              reduce using rule 12 (body -> body line semicolons .)
+    BUILD_IN        reduce using rule 12 (body -> body line semicolons .)
+    IF              reduce using rule 12 (body -> body line semicolons .)
+    WHILE           reduce using rule 12 (body -> body line semicolons .)
+    FOR             reduce using rule 12 (body -> body line semicolons .)
+    SEMICOLON       shift and go to state 75
+
+  ! SEMICOLON       [ reduce using rule 12 (body -> body line semicolons .) ]
+
+
+state 47
+
+    (14) semicolons -> SEMICOLON .
+
+    SEMICOLON       reduce using rule 14 (semicolons -> SEMICOLON .)
+    RCURL           reduce using rule 14 (semicolons -> SEMICOLON .)
+    RETURN          reduce using rule 14 (semicolons -> SEMICOLON .)
+    BREAK           reduce using rule 14 (semicolons -> SEMICOLON .)
+    CONTINUE        reduce using rule 14 (semicolons -> SEMICOLON .)
+    VARIABLE_TYPE   reduce using rule 14 (semicolons -> SEMICOLON .)
+    CUSTOM_FUNC     reduce using rule 14 (semicolons -> SEMICOLON .)
+    ID              reduce using rule 14 (semicolons -> SEMICOLON .)
+    BUILD_IN        reduce using rule 14 (semicolons -> SEMICOLON .)
+    IF              reduce using rule 14 (semicolons -> SEMICOLON .)
+    WHILE           reduce using rule 14 (semicolons -> SEMICOLON .)
+    FOR             reduce using rule 14 (semicolons -> SEMICOLON .)
+
+
+state 48
+
+    (28) if_statement -> if_statement ELSE . block
+    (10) block -> . LCURL body RCURL
+
+    LCURL           shift and go to state 8
+
+    block                          shift and go to state 76
+
+state 49
+
+    (23) modal_function -> RETURN arg .
+
+    SEMICOLON       reduce using rule 23 (modal_function -> RETURN arg .)
+
+
+state 50
+
+    (75) arg -> ID . LCUADR RCUADR
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (56) func -> ID . LPAR args RPAR
+
+    LCUADR          shift and go to state 72
+    LPAR            shift and go to state 73
+
+
+state 51
+
+    (40) init -> VARIABLE_TYPE ID .
+    (41) init -> VARIABLE_TYPE ID . EQUAL ID DIVMUL NUMBER
+    (42) init -> VARIABLE_TYPE ID . EQUAL expr
+    (43) init -> VARIABLE_TYPE ID . EQUAL var_cal
+    (44) init -> VARIABLE_TYPE ID . LCUADR RCUADR EQUAL array_init
+
+    SEMICOLON       reduce using rule 40 (init -> VARIABLE_TYPE ID .)
+    EQUAL           shift and go to state 77
+    LCUADR          shift and go to state 78
+
+
+state 52
+
+    (56) func -> ID LPAR . args RPAR
+    (70) term -> LPAR . expr RPAR
+    (6) args -> .
+    (7) args -> . expr
+    (8) args -> . args COMMA expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RPAR            reduce using rule 6 (args -> .)
+    COMMA           reduce using rule 6 (args -> .)
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    args                           shift and go to state 79
+    expr                           shift and go to state 80
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 53
+
+    (50) assign -> ID EQUAL . expr
+    (51) assign -> ID EQUAL . var_cal
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 81
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 82
+    var_cal                        shift and go to state 83
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    func                           shift and go to state 45
+
+state 54
+
+    (54) assign -> ID expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    SEMICOLON       reduce using rule 54 (assign -> ID expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 55
+
+    (26) var_cal -> ID LCUADR . expr RCUADR
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 84
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 56
+
+    (52) assign -> var_cal EQUAL . expr
+    (53) assign -> var_cal EQUAL . var_cal
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 81
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    var_cal                        shift and go to state 85
+    expr                           shift and go to state 86
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    func                           shift and go to state 45
+
+state 57
+
+    (55) func -> CUSTOM_FUNC LPAR . args RPAR
+    (6) args -> .
+    (7) args -> . expr
+    (8) args -> . args COMMA expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RPAR            reduce using rule 6 (args -> .)
+    COMMA           reduce using rule 6 (args -> .)
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    args                           shift and go to state 87
+    expr                           shift and go to state 36
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 58
+
+    (57) func -> BUILD_IN LPAR . args RPAR
+    (6) args -> .
+    (7) args -> . expr
+    (8) args -> . args COMMA expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RPAR            reduce using rule 6 (args -> .)
+    COMMA           reduce using rule 6 (args -> .)
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    args                           shift and go to state 88
+    expr                           shift and go to state 36
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 59
+
+    (58) func -> BUILD_IN output_operator .
+
+    SEMICOLON       reduce using rule 58 (func -> BUILD_IN output_operator .)
+    DIVMUL          reduce using rule 58 (func -> BUILD_IN output_operator .)
+    PLUSMINUS       reduce using rule 58 (func -> BUILD_IN output_operator .)
+    MOD             reduce using rule 58 (func -> BUILD_IN output_operator .)
+    RPAR            reduce using rule 58 (func -> BUILD_IN output_operator .)
+    COMMA           reduce using rule 58 (func -> BUILD_IN output_operator .)
+    RCUADR          reduce using rule 58 (func -> BUILD_IN output_operator .)
+    DEQUAL          reduce using rule 58 (func -> BUILD_IN output_operator .)
+    GT              reduce using rule 58 (func -> BUILD_IN output_operator .)
+    LT              reduce using rule 58 (func -> BUILD_IN output_operator .)
+    GE              reduce using rule 58 (func -> BUILD_IN output_operator .)
+    LE              reduce using rule 58 (func -> BUILD_IN output_operator .)
+    NOTEQUAL        reduce using rule 58 (func -> BUILD_IN output_operator .)
+    RCURL           reduce using rule 58 (func -> BUILD_IN output_operator .)
+    NUMBER          reduce using rule 58 (func -> BUILD_IN output_operator .)
+    STRING          reduce using rule 58 (func -> BUILD_IN output_operator .)
+    VARIABLE_TYPE   reduce using rule 58 (func -> BUILD_IN output_operator .)
+    ID              reduce using rule 58 (func -> BUILD_IN output_operator .)
+    CUSTOM_FUNC     reduce using rule 58 (func -> BUILD_IN output_operator .)
+    BUILD_IN        reduce using rule 58 (func -> BUILD_IN output_operator .)
+
+
+state 60
+
+    (59) output_operator -> LT . LT arg
+    (60) output_operator -> LT . LT BUILD_IN
+    (61) output_operator -> LT . LT ID
+
+    LT              shift and go to state 89
+
+
+state 61
+
+    (27) if_statement -> IF LPAR . condition RPAR block
+    (32) condition -> . expr cond_sign expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    condition                      shift and go to state 90
+    expr                           shift and go to state 91
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 62
+
+    (29) while_statement -> WHILE LPAR . condition RPAR block
+    (32) condition -> . expr cond_sign expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    condition                      shift and go to state 92
+    expr                           shift and go to state 91
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 63
+
+    (30) for_statement -> FOR LPAR . init SEMICOLON condition SEMICOLON change_val RPAR block
+    (39) init -> .
+    (40) init -> . VARIABLE_TYPE ID
+    (41) init -> . VARIABLE_TYPE ID EQUAL ID DIVMUL NUMBER
+    (42) init -> . VARIABLE_TYPE ID EQUAL expr
+    (43) init -> . VARIABLE_TYPE ID EQUAL var_cal
+    (44) init -> . VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init
+
+    SEMICOLON       reduce using rule 39 (init -> .)
+    VARIABLE_TYPE   shift and go to state 25
+
+    init                           shift and go to state 93
+
+state 64
+
+    (73) arg -> VARIABLE_TYPE ID .
+    (74) arg -> VARIABLE_TYPE ID . LCUADR RCUADR
+
+    DIVMUL          reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    PLUSMINUS       reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    MOD             reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    RPAR            reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    COMMA           reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    SEMICOLON       reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    RCUADR          reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    DEQUAL          reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    GT              reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    LT              reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    GE              reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    LE              reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    NOTEQUAL        reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    RCURL           reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    NUMBER          reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    STRING          reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    VARIABLE_TYPE   reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    ID              reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    CUSTOM_FUNC     reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    BUILD_IN        reduce using rule 73 (arg -> VARIABLE_TYPE ID .)
+    LCUADR          shift and go to state 94
+
+
+state 65
+
+    (70) term -> LPAR expr . RPAR
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RPAR            shift and go to state 95
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 66
+
+    (5) func_header -> VARIABLE_TYPE FUNCDECL LPAR args RPAR .
+
+    LCURL           reduce using rule 5 (func_header -> VARIABLE_TYPE FUNCDECL LPAR args RPAR .)
+
+
+state 67
+
+    (8) args -> args COMMA . expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 96
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 68
+
+    (64) expr -> expr PLUSMINUS . fact
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    fact                           shift and go to state 97
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 69
+
+    (65) expr -> expr MOD . fact
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    fact                           shift and go to state 98
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 70
+
+    (68) fact -> fact DIVMUL . term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    term                           shift and go to state 99
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 71
+
+    (63) expr -> PLUSMINUS PLUSMINUS .
+
+    PLUSMINUS       reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    MOD             reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    RPAR            reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    COMMA           reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    SEMICOLON       reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    RCUADR          reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    DEQUAL          reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    GT              reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    LT              reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    GE              reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    LE              reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+    NOTEQUAL        reduce using rule 63 (expr -> PLUSMINUS PLUSMINUS .)
+
+
+state 72
+
+    (75) arg -> ID LCUADR . RCUADR
+    (26) var_cal -> ID LCUADR . expr RCUADR
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RCUADR          shift and go to state 100
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 84
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 73
+
+    (56) func -> ID LPAR . args RPAR
+    (6) args -> .
+    (7) args -> . expr
+    (8) args -> . args COMMA expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RPAR            reduce using rule 6 (args -> .)
+    COMMA           reduce using rule 6 (args -> .)
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    args                           shift and go to state 79
+    expr                           shift and go to state 36
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 74
+
+    (77) arg -> NUMBER ID .
+
+    DIVMUL          reduce using rule 77 (arg -> NUMBER ID .)
+    PLUSMINUS       reduce using rule 77 (arg -> NUMBER ID .)
+    MOD             reduce using rule 77 (arg -> NUMBER ID .)
+    RPAR            reduce using rule 77 (arg -> NUMBER ID .)
+    COMMA           reduce using rule 77 (arg -> NUMBER ID .)
+    SEMICOLON       reduce using rule 77 (arg -> NUMBER ID .)
+    RCUADR          reduce using rule 77 (arg -> NUMBER ID .)
+    DEQUAL          reduce using rule 77 (arg -> NUMBER ID .)
+    GT              reduce using rule 77 (arg -> NUMBER ID .)
+    LT              reduce using rule 77 (arg -> NUMBER ID .)
+    GE              reduce using rule 77 (arg -> NUMBER ID .)
+    LE              reduce using rule 77 (arg -> NUMBER ID .)
+    NOTEQUAL        reduce using rule 77 (arg -> NUMBER ID .)
+    RCURL           reduce using rule 77 (arg -> NUMBER ID .)
+    NUMBER          reduce using rule 77 (arg -> NUMBER ID .)
+    STRING          reduce using rule 77 (arg -> NUMBER ID .)
+    VARIABLE_TYPE   reduce using rule 77 (arg -> NUMBER ID .)
+    ID              reduce using rule 77 (arg -> NUMBER ID .)
+    CUSTOM_FUNC     reduce using rule 77 (arg -> NUMBER ID .)
+    BUILD_IN        reduce using rule 77 (arg -> NUMBER ID .)
+
+
+state 75
+
+    (15) semicolons -> semicolons SEMICOLON .
+
+    SEMICOLON       reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    RCURL           reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    RETURN          reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    BREAK           reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    CONTINUE        reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    VARIABLE_TYPE   reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    CUSTOM_FUNC     reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    ID              reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    BUILD_IN        reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    IF              reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    WHILE           reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+    FOR             reduce using rule 15 (semicolons -> semicolons SEMICOLON .)
+
+
+state 76
+
+    (28) if_statement -> if_statement ELSE block .
+
+    ELSE            reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    RCURL           reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    RETURN          reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    BREAK           reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    CONTINUE        reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    VARIABLE_TYPE   reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    CUSTOM_FUNC     reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    ID              reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    BUILD_IN        reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    IF              reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    WHILE           reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    FOR             reduce using rule 28 (if_statement -> if_statement ELSE block .)
+    SEMICOLON       reduce using rule 28 (if_statement -> if_statement ELSE block .)
+
+
+state 77
+
+    (41) init -> VARIABLE_TYPE ID EQUAL . ID DIVMUL NUMBER
+    (42) init -> VARIABLE_TYPE ID EQUAL . expr
+    (43) init -> VARIABLE_TYPE ID EQUAL . var_cal
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    ID              shift and go to state 101
+    PLUSMINUS       shift and go to state 38
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 102
+    var_cal                        shift and go to state 103
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    func                           shift and go to state 45
+
+state 78
+
+    (44) init -> VARIABLE_TYPE ID LCUADR . RCUADR EQUAL array_init
+
+    RCUADR          shift and go to state 104
+
+
+state 79
+
+    (56) func -> ID LPAR args . RPAR
+    (8) args -> args . COMMA expr
+
+    RPAR            shift and go to state 105
+    COMMA           shift and go to state 67
+
+
+state 80
+
+    (70) term -> LPAR expr . RPAR
+    (7) args -> expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+  ! shift/reduce conflict for RPAR resolved as shift
+    RPAR            shift and go to state 95
+    COMMA           reduce using rule 7 (args -> expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+  ! RPAR            [ reduce using rule 7 (args -> expr .) ]
+
+
+state 81
+
+    (66) expr -> ID .
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (75) arg -> ID . LCUADR RCUADR
+    (56) func -> ID . LPAR args RPAR
+
+    PLUSMINUS       reduce using rule 66 (expr -> ID .)
+    MOD             reduce using rule 66 (expr -> ID .)
+    SEMICOLON       reduce using rule 66 (expr -> ID .)
+    LCUADR          shift and go to state 106
+    LPAR            shift and go to state 73
+
+
+state 82
+
+    (50) assign -> ID EQUAL expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    SEMICOLON       reduce using rule 50 (assign -> ID EQUAL expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 83
+
+    (51) assign -> ID EQUAL var_cal .
+    (76) arg -> var_cal .
+
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 51 (assign -> ID EQUAL var_cal .)
+    SEMICOLON       reduce using rule 51 (assign -> ID EQUAL var_cal .)
+    DIVMUL          reduce using rule 76 (arg -> var_cal .)
+    PLUSMINUS       reduce using rule 76 (arg -> var_cal .)
+    MOD             reduce using rule 76 (arg -> var_cal .)
+
+  ! SEMICOLON       [ reduce using rule 76 (arg -> var_cal .) ]
+
+
+state 84
+
+    (26) var_cal -> ID LCUADR expr . RCUADR
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RCUADR          shift and go to state 107
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 85
+
+    (53) assign -> var_cal EQUAL var_cal .
+    (76) arg -> var_cal .
+
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 53 (assign -> var_cal EQUAL var_cal .)
+    SEMICOLON       reduce using rule 53 (assign -> var_cal EQUAL var_cal .)
+    DIVMUL          reduce using rule 76 (arg -> var_cal .)
+    PLUSMINUS       reduce using rule 76 (arg -> var_cal .)
+    MOD             reduce using rule 76 (arg -> var_cal .)
+
+  ! SEMICOLON       [ reduce using rule 76 (arg -> var_cal .) ]
+
+
+state 86
+
+    (52) assign -> var_cal EQUAL expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    SEMICOLON       reduce using rule 52 (assign -> var_cal EQUAL expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 87
+
+    (55) func -> CUSTOM_FUNC LPAR args . RPAR
+    (8) args -> args . COMMA expr
+
+    RPAR            shift and go to state 108
+    COMMA           shift and go to state 67
+
+
+state 88
+
+    (57) func -> BUILD_IN LPAR args . RPAR
+    (8) args -> args . COMMA expr
+
+    RPAR            shift and go to state 109
+    COMMA           shift and go to state 67
+
+
+state 89
+
+    (59) output_operator -> LT LT . arg
+    (60) output_operator -> LT LT . BUILD_IN
+    (61) output_operator -> LT LT . ID
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    BUILD_IN        shift and go to state 111
+    ID              shift and go to state 112
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+
+    arg                            shift and go to state 110
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 90
+
+    (27) if_statement -> IF LPAR condition . RPAR block
+
+    RPAR            shift and go to state 113
+
+
+state 91
+
+    (32) condition -> expr . cond_sign expr
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+    (33) cond_sign -> . DEQUAL
+    (34) cond_sign -> . GT
+    (35) cond_sign -> . LT
+    (36) cond_sign -> . GE
+    (37) cond_sign -> . LE
+    (38) cond_sign -> . NOTEQUAL
+
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+    DEQUAL          shift and go to state 115
+    GT              shift and go to state 116
+    LT              shift and go to state 117
+    GE              shift and go to state 118
+    LE              shift and go to state 119
+    NOTEQUAL        shift and go to state 120
+
+    cond_sign                      shift and go to state 114
+
+state 92
+
+    (29) while_statement -> WHILE LPAR condition . RPAR block
+
+    RPAR            shift and go to state 121
+
+
+state 93
+
+    (30) for_statement -> FOR LPAR init . SEMICOLON condition SEMICOLON change_val RPAR block
+
+    SEMICOLON       shift and go to state 122
+
+
+state 94
+
+    (74) arg -> VARIABLE_TYPE ID LCUADR . RCUADR
+
+    RCUADR          shift and go to state 123
+
+
+state 95
+
+    (70) term -> LPAR expr RPAR .
+
+    DIVMUL          reduce using rule 70 (term -> LPAR expr RPAR .)
+    PLUSMINUS       reduce using rule 70 (term -> LPAR expr RPAR .)
+    MOD             reduce using rule 70 (term -> LPAR expr RPAR .)
+    RPAR            reduce using rule 70 (term -> LPAR expr RPAR .)
+    COMMA           reduce using rule 70 (term -> LPAR expr RPAR .)
+    SEMICOLON       reduce using rule 70 (term -> LPAR expr RPAR .)
+    RCUADR          reduce using rule 70 (term -> LPAR expr RPAR .)
+    DEQUAL          reduce using rule 70 (term -> LPAR expr RPAR .)
+    GT              reduce using rule 70 (term -> LPAR expr RPAR .)
+    LT              reduce using rule 70 (term -> LPAR expr RPAR .)
+    GE              reduce using rule 70 (term -> LPAR expr RPAR .)
+    LE              reduce using rule 70 (term -> LPAR expr RPAR .)
+    NOTEQUAL        reduce using rule 70 (term -> LPAR expr RPAR .)
+
+
+state 96
+
+    (8) args -> args COMMA expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RPAR            reduce using rule 8 (args -> args COMMA expr .)
+    COMMA           reduce using rule 8 (args -> args COMMA expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 97
+
+    (64) expr -> expr PLUSMINUS fact .
+    (68) fact -> fact . DIVMUL term
+
+    PLUSMINUS       reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    MOD             reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    RPAR            reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    COMMA           reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    SEMICOLON       reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    RCUADR          reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    DEQUAL          reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    GT              reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    LT              reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    GE              reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    LE              reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    NOTEQUAL        reduce using rule 64 (expr -> expr PLUSMINUS fact .)
+    DIVMUL          shift and go to state 70
+
+
+state 98
+
+    (65) expr -> expr MOD fact .
+    (68) fact -> fact . DIVMUL term
+
+    PLUSMINUS       reduce using rule 65 (expr -> expr MOD fact .)
+    MOD             reduce using rule 65 (expr -> expr MOD fact .)
+    RPAR            reduce using rule 65 (expr -> expr MOD fact .)
+    COMMA           reduce using rule 65 (expr -> expr MOD fact .)
+    SEMICOLON       reduce using rule 65 (expr -> expr MOD fact .)
+    RCUADR          reduce using rule 65 (expr -> expr MOD fact .)
+    DEQUAL          reduce using rule 65 (expr -> expr MOD fact .)
+    GT              reduce using rule 65 (expr -> expr MOD fact .)
+    LT              reduce using rule 65 (expr -> expr MOD fact .)
+    GE              reduce using rule 65 (expr -> expr MOD fact .)
+    LE              reduce using rule 65 (expr -> expr MOD fact .)
+    NOTEQUAL        reduce using rule 65 (expr -> expr MOD fact .)
+    DIVMUL          shift and go to state 70
+
+
+state 99
+
+    (68) fact -> fact DIVMUL term .
+
+    DIVMUL          reduce using rule 68 (fact -> fact DIVMUL term .)
+    PLUSMINUS       reduce using rule 68 (fact -> fact DIVMUL term .)
+    MOD             reduce using rule 68 (fact -> fact DIVMUL term .)
+    RPAR            reduce using rule 68 (fact -> fact DIVMUL term .)
+    COMMA           reduce using rule 68 (fact -> fact DIVMUL term .)
+    SEMICOLON       reduce using rule 68 (fact -> fact DIVMUL term .)
+    RCUADR          reduce using rule 68 (fact -> fact DIVMUL term .)
+    DEQUAL          reduce using rule 68 (fact -> fact DIVMUL term .)
+    GT              reduce using rule 68 (fact -> fact DIVMUL term .)
+    LT              reduce using rule 68 (fact -> fact DIVMUL term .)
+    GE              reduce using rule 68 (fact -> fact DIVMUL term .)
+    LE              reduce using rule 68 (fact -> fact DIVMUL term .)
+    NOTEQUAL        reduce using rule 68 (fact -> fact DIVMUL term .)
+
+
+state 100
+
+    (75) arg -> ID LCUADR RCUADR .
+
+    DIVMUL          reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    PLUSMINUS       reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    MOD             reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    RPAR            reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    COMMA           reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    SEMICOLON       reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    RCUADR          reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    DEQUAL          reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    GT              reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    LT              reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    GE              reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    LE              reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    NOTEQUAL        reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    RCURL           reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    NUMBER          reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    STRING          reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    VARIABLE_TYPE   reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    ID              reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    CUSTOM_FUNC     reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+    BUILD_IN        reduce using rule 75 (arg -> ID LCUADR RCUADR .)
+
+
+state 101
+
+    (41) init -> VARIABLE_TYPE ID EQUAL ID . DIVMUL NUMBER
+    (66) expr -> ID .
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (75) arg -> ID . LCUADR RCUADR
+    (56) func -> ID . LPAR args RPAR
+
+    DIVMUL          shift and go to state 124
+    PLUSMINUS       reduce using rule 66 (expr -> ID .)
+    MOD             reduce using rule 66 (expr -> ID .)
+    SEMICOLON       reduce using rule 66 (expr -> ID .)
+    LCUADR          shift and go to state 106
+    LPAR            shift and go to state 73
+
+
+state 102
+
+    (42) init -> VARIABLE_TYPE ID EQUAL expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    SEMICOLON       reduce using rule 42 (init -> VARIABLE_TYPE ID EQUAL expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 103
+
+    (43) init -> VARIABLE_TYPE ID EQUAL var_cal .
+    (76) arg -> var_cal .
+
+  ! reduce/reduce conflict for SEMICOLON resolved using rule 43 (init -> VARIABLE_TYPE ID EQUAL var_cal .)
+    SEMICOLON       reduce using rule 43 (init -> VARIABLE_TYPE ID EQUAL var_cal .)
+    DIVMUL          reduce using rule 76 (arg -> var_cal .)
+    PLUSMINUS       reduce using rule 76 (arg -> var_cal .)
+    MOD             reduce using rule 76 (arg -> var_cal .)
+
+  ! SEMICOLON       [ reduce using rule 76 (arg -> var_cal .) ]
+
+
+state 104
+
+    (44) init -> VARIABLE_TYPE ID LCUADR RCUADR . EQUAL array_init
+
+    EQUAL           shift and go to state 125
+
+
+state 105
+
+    (56) func -> ID LPAR args RPAR .
+
+    SEMICOLON       reduce using rule 56 (func -> ID LPAR args RPAR .)
+    DIVMUL          reduce using rule 56 (func -> ID LPAR args RPAR .)
+    PLUSMINUS       reduce using rule 56 (func -> ID LPAR args RPAR .)
+    MOD             reduce using rule 56 (func -> ID LPAR args RPAR .)
+    RPAR            reduce using rule 56 (func -> ID LPAR args RPAR .)
+    COMMA           reduce using rule 56 (func -> ID LPAR args RPAR .)
+    RCUADR          reduce using rule 56 (func -> ID LPAR args RPAR .)
+    DEQUAL          reduce using rule 56 (func -> ID LPAR args RPAR .)
+    GT              reduce using rule 56 (func -> ID LPAR args RPAR .)
+    LT              reduce using rule 56 (func -> ID LPAR args RPAR .)
+    GE              reduce using rule 56 (func -> ID LPAR args RPAR .)
+    LE              reduce using rule 56 (func -> ID LPAR args RPAR .)
+    NOTEQUAL        reduce using rule 56 (func -> ID LPAR args RPAR .)
+    RCURL           reduce using rule 56 (func -> ID LPAR args RPAR .)
+    NUMBER          reduce using rule 56 (func -> ID LPAR args RPAR .)
+    STRING          reduce using rule 56 (func -> ID LPAR args RPAR .)
+    VARIABLE_TYPE   reduce using rule 56 (func -> ID LPAR args RPAR .)
+    ID              reduce using rule 56 (func -> ID LPAR args RPAR .)
+    CUSTOM_FUNC     reduce using rule 56 (func -> ID LPAR args RPAR .)
+    BUILD_IN        reduce using rule 56 (func -> ID LPAR args RPAR .)
+
+
+state 106
+
+    (26) var_cal -> ID LCUADR . expr RCUADR
+    (75) arg -> ID LCUADR . RCUADR
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RCUADR          shift and go to state 100
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 84
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 107
+
+    (26) var_cal -> ID LCUADR expr RCUADR .
+
+    EQUAL           reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    DIVMUL          reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    PLUSMINUS       reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    MOD             reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    RPAR            reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    COMMA           reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    SEMICOLON       reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    RCUADR          reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    DEQUAL          reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    GT              reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    LT              reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    GE              reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    LE              reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    NOTEQUAL        reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    RCURL           reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    NUMBER          reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    STRING          reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    VARIABLE_TYPE   reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    ID              reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    CUSTOM_FUNC     reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+    BUILD_IN        reduce using rule 26 (var_cal -> ID LCUADR expr RCUADR .)
+
+
+state 108
+
+    (55) func -> CUSTOM_FUNC LPAR args RPAR .
+
+    SEMICOLON       reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    DIVMUL          reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    PLUSMINUS       reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    MOD             reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    RPAR            reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    COMMA           reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    RCUADR          reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    DEQUAL          reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    GT              reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    LT              reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    GE              reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    LE              reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    NOTEQUAL        reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    RCURL           reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    NUMBER          reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    STRING          reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    VARIABLE_TYPE   reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    ID              reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    CUSTOM_FUNC     reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+    BUILD_IN        reduce using rule 55 (func -> CUSTOM_FUNC LPAR args RPAR .)
+
+
+state 109
+
+    (57) func -> BUILD_IN LPAR args RPAR .
+
+    SEMICOLON       reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    DIVMUL          reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    PLUSMINUS       reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    MOD             reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    RPAR            reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    COMMA           reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    RCUADR          reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    DEQUAL          reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    GT              reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    LT              reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    GE              reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    LE              reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    NOTEQUAL        reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    RCURL           reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    NUMBER          reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    STRING          reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    VARIABLE_TYPE   reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    ID              reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    CUSTOM_FUNC     reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+    BUILD_IN        reduce using rule 57 (func -> BUILD_IN LPAR args RPAR .)
+
+
+state 110
+
+    (59) output_operator -> LT LT arg .
+
+    SEMICOLON       reduce using rule 59 (output_operator -> LT LT arg .)
+    DIVMUL          reduce using rule 59 (output_operator -> LT LT arg .)
+    PLUSMINUS       reduce using rule 59 (output_operator -> LT LT arg .)
+    MOD             reduce using rule 59 (output_operator -> LT LT arg .)
+    RPAR            reduce using rule 59 (output_operator -> LT LT arg .)
+    COMMA           reduce using rule 59 (output_operator -> LT LT arg .)
+    RCUADR          reduce using rule 59 (output_operator -> LT LT arg .)
+    DEQUAL          reduce using rule 59 (output_operator -> LT LT arg .)
+    GT              reduce using rule 59 (output_operator -> LT LT arg .)
+    LT              reduce using rule 59 (output_operator -> LT LT arg .)
+    GE              reduce using rule 59 (output_operator -> LT LT arg .)
+    LE              reduce using rule 59 (output_operator -> LT LT arg .)
+    NOTEQUAL        reduce using rule 59 (output_operator -> LT LT arg .)
+    RCURL           reduce using rule 59 (output_operator -> LT LT arg .)
+    NUMBER          reduce using rule 59 (output_operator -> LT LT arg .)
+    STRING          reduce using rule 59 (output_operator -> LT LT arg .)
+    VARIABLE_TYPE   reduce using rule 59 (output_operator -> LT LT arg .)
+    ID              reduce using rule 59 (output_operator -> LT LT arg .)
+    CUSTOM_FUNC     reduce using rule 59 (output_operator -> LT LT arg .)
+    BUILD_IN        reduce using rule 59 (output_operator -> LT LT arg .)
+
+
+state 111
+
+    (60) output_operator -> LT LT BUILD_IN .
+    (57) func -> BUILD_IN . LPAR args RPAR
+    (58) func -> BUILD_IN . output_operator
+    (59) output_operator -> . LT LT arg
+    (60) output_operator -> . LT LT BUILD_IN
+    (61) output_operator -> . LT LT ID
+
+  ! shift/reduce conflict for LT resolved as shift
+    SEMICOLON       reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    DIVMUL          reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    PLUSMINUS       reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    MOD             reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    RPAR            reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    COMMA           reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    RCUADR          reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    DEQUAL          reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    GT              reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    GE              reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    LE              reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    NOTEQUAL        reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    RCURL           reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    NUMBER          reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    STRING          reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    VARIABLE_TYPE   reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    ID              reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    CUSTOM_FUNC     reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    BUILD_IN        reduce using rule 60 (output_operator -> LT LT BUILD_IN .)
+    LPAR            shift and go to state 58
+    LT              shift and go to state 60
+
+  ! LT              [ reduce using rule 60 (output_operator -> LT LT BUILD_IN .) ]
+
+    output_operator                shift and go to state 59
+
+state 112
+
+    (61) output_operator -> LT LT ID .
+    (75) arg -> ID . LCUADR RCUADR
+    (26) var_cal -> ID . LCUADR expr RCUADR
+    (56) func -> ID . LPAR args RPAR
+
+    SEMICOLON       reduce using rule 61 (output_operator -> LT LT ID .)
+    DIVMUL          reduce using rule 61 (output_operator -> LT LT ID .)
+    PLUSMINUS       reduce using rule 61 (output_operator -> LT LT ID .)
+    MOD             reduce using rule 61 (output_operator -> LT LT ID .)
+    RPAR            reduce using rule 61 (output_operator -> LT LT ID .)
+    COMMA           reduce using rule 61 (output_operator -> LT LT ID .)
+    RCUADR          reduce using rule 61 (output_operator -> LT LT ID .)
+    DEQUAL          reduce using rule 61 (output_operator -> LT LT ID .)
+    GT              reduce using rule 61 (output_operator -> LT LT ID .)
+    LT              reduce using rule 61 (output_operator -> LT LT ID .)
+    GE              reduce using rule 61 (output_operator -> LT LT ID .)
+    LE              reduce using rule 61 (output_operator -> LT LT ID .)
+    NOTEQUAL        reduce using rule 61 (output_operator -> LT LT ID .)
+    RCURL           reduce using rule 61 (output_operator -> LT LT ID .)
+    NUMBER          reduce using rule 61 (output_operator -> LT LT ID .)
+    STRING          reduce using rule 61 (output_operator -> LT LT ID .)
+    VARIABLE_TYPE   reduce using rule 61 (output_operator -> LT LT ID .)
+    ID              reduce using rule 61 (output_operator -> LT LT ID .)
+    CUSTOM_FUNC     reduce using rule 61 (output_operator -> LT LT ID .)
+    BUILD_IN        reduce using rule 61 (output_operator -> LT LT ID .)
+    LCUADR          shift and go to state 72
+    LPAR            shift and go to state 73
+
+
+state 113
+
+    (27) if_statement -> IF LPAR condition RPAR . block
+    (10) block -> . LCURL body RCURL
+
+    LCURL           shift and go to state 8
+
+    block                          shift and go to state 126
+
+state 114
+
+    (32) condition -> expr cond_sign . expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 127
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 115
+
+    (33) cond_sign -> DEQUAL .
+
+    PLUSMINUS       reduce using rule 33 (cond_sign -> DEQUAL .)
+    ID              reduce using rule 33 (cond_sign -> DEQUAL .)
+    LPAR            reduce using rule 33 (cond_sign -> DEQUAL .)
+    NUMBER          reduce using rule 33 (cond_sign -> DEQUAL .)
+    STRING          reduce using rule 33 (cond_sign -> DEQUAL .)
+    VARIABLE_TYPE   reduce using rule 33 (cond_sign -> DEQUAL .)
+    CUSTOM_FUNC     reduce using rule 33 (cond_sign -> DEQUAL .)
+    BUILD_IN        reduce using rule 33 (cond_sign -> DEQUAL .)
+
+
+state 116
+
+    (34) cond_sign -> GT .
+
+    PLUSMINUS       reduce using rule 34 (cond_sign -> GT .)
+    ID              reduce using rule 34 (cond_sign -> GT .)
+    LPAR            reduce using rule 34 (cond_sign -> GT .)
+    NUMBER          reduce using rule 34 (cond_sign -> GT .)
+    STRING          reduce using rule 34 (cond_sign -> GT .)
+    VARIABLE_TYPE   reduce using rule 34 (cond_sign -> GT .)
+    CUSTOM_FUNC     reduce using rule 34 (cond_sign -> GT .)
+    BUILD_IN        reduce using rule 34 (cond_sign -> GT .)
+
+
+state 117
+
+    (35) cond_sign -> LT .
+
+    PLUSMINUS       reduce using rule 35 (cond_sign -> LT .)
+    ID              reduce using rule 35 (cond_sign -> LT .)
+    LPAR            reduce using rule 35 (cond_sign -> LT .)
+    NUMBER          reduce using rule 35 (cond_sign -> LT .)
+    STRING          reduce using rule 35 (cond_sign -> LT .)
+    VARIABLE_TYPE   reduce using rule 35 (cond_sign -> LT .)
+    CUSTOM_FUNC     reduce using rule 35 (cond_sign -> LT .)
+    BUILD_IN        reduce using rule 35 (cond_sign -> LT .)
+
+
+state 118
+
+    (36) cond_sign -> GE .
+
+    PLUSMINUS       reduce using rule 36 (cond_sign -> GE .)
+    ID              reduce using rule 36 (cond_sign -> GE .)
+    LPAR            reduce using rule 36 (cond_sign -> GE .)
+    NUMBER          reduce using rule 36 (cond_sign -> GE .)
+    STRING          reduce using rule 36 (cond_sign -> GE .)
+    VARIABLE_TYPE   reduce using rule 36 (cond_sign -> GE .)
+    CUSTOM_FUNC     reduce using rule 36 (cond_sign -> GE .)
+    BUILD_IN        reduce using rule 36 (cond_sign -> GE .)
+
+
+state 119
+
+    (37) cond_sign -> LE .
+
+    PLUSMINUS       reduce using rule 37 (cond_sign -> LE .)
+    ID              reduce using rule 37 (cond_sign -> LE .)
+    LPAR            reduce using rule 37 (cond_sign -> LE .)
+    NUMBER          reduce using rule 37 (cond_sign -> LE .)
+    STRING          reduce using rule 37 (cond_sign -> LE .)
+    VARIABLE_TYPE   reduce using rule 37 (cond_sign -> LE .)
+    CUSTOM_FUNC     reduce using rule 37 (cond_sign -> LE .)
+    BUILD_IN        reduce using rule 37 (cond_sign -> LE .)
+
+
+state 120
+
+    (38) cond_sign -> NOTEQUAL .
+
+    PLUSMINUS       reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    ID              reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    LPAR            reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    NUMBER          reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    STRING          reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    VARIABLE_TYPE   reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    CUSTOM_FUNC     reduce using rule 38 (cond_sign -> NOTEQUAL .)
+    BUILD_IN        reduce using rule 38 (cond_sign -> NOTEQUAL .)
+
+
+state 121
+
+    (29) while_statement -> WHILE LPAR condition RPAR . block
+    (10) block -> . LCURL body RCURL
+
+    LCURL           shift and go to state 8
+
+    block                          shift and go to state 128
+
+state 122
+
+    (30) for_statement -> FOR LPAR init SEMICOLON . condition SEMICOLON change_val RPAR block
+    (32) condition -> . expr cond_sign expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    condition                      shift and go to state 129
+    expr                           shift and go to state 91
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 123
+
+    (74) arg -> VARIABLE_TYPE ID LCUADR RCUADR .
+
+    DIVMUL          reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    PLUSMINUS       reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    MOD             reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    RPAR            reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    COMMA           reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    SEMICOLON       reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    RCUADR          reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    DEQUAL          reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    GT              reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    LT              reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    GE              reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    LE              reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    NOTEQUAL        reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    RCURL           reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    NUMBER          reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    STRING          reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    VARIABLE_TYPE   reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    ID              reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    CUSTOM_FUNC     reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+    BUILD_IN        reduce using rule 74 (arg -> VARIABLE_TYPE ID LCUADR RCUADR .)
+
+
+state 124
+
+    (41) init -> VARIABLE_TYPE ID EQUAL ID DIVMUL . NUMBER
+
+    NUMBER          shift and go to state 130
+
+
+state 125
+
+    (44) init -> VARIABLE_TYPE ID LCUADR RCUADR EQUAL . array_init
+    (45) array_init -> . LCURL init_block RCURL
+
+    LCURL           shift and go to state 132
+
+    array_init                     shift and go to state 131
+
+state 126
+
+    (27) if_statement -> IF LPAR condition RPAR block .
+
+    ELSE            reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    RCURL           reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    RETURN          reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    BREAK           reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    CONTINUE        reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    VARIABLE_TYPE   reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    CUSTOM_FUNC     reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    ID              reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    BUILD_IN        reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    IF              reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    WHILE           reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    FOR             reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+    SEMICOLON       reduce using rule 27 (if_statement -> IF LPAR condition RPAR block .)
+
+
+state 127
+
+    (32) condition -> expr cond_sign expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RPAR            reduce using rule 32 (condition -> expr cond_sign expr .)
+    SEMICOLON       reduce using rule 32 (condition -> expr cond_sign expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 128
+
+    (29) while_statement -> WHILE LPAR condition RPAR block .
+
+    RCURL           reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    RETURN          reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    BREAK           reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    CONTINUE        reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    VARIABLE_TYPE   reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    CUSTOM_FUNC     reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    ID              reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    BUILD_IN        reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    IF              reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    WHILE           reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    FOR             reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+    SEMICOLON       reduce using rule 29 (while_statement -> WHILE LPAR condition RPAR block .)
+
+
+state 129
+
+    (30) for_statement -> FOR LPAR init SEMICOLON condition . SEMICOLON change_val RPAR block
+
+    SEMICOLON       shift and go to state 133
+
+
+state 130
+
+    (41) init -> VARIABLE_TYPE ID EQUAL ID DIVMUL NUMBER .
+
+    SEMICOLON       reduce using rule 41 (init -> VARIABLE_TYPE ID EQUAL ID DIVMUL NUMBER .)
+
+
+state 131
+
+    (44) init -> VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init .
+
+    SEMICOLON       reduce using rule 44 (init -> VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init .)
+
+
+state 132
+
+    (45) array_init -> LCURL . init_block RCURL
+    (46) init_block -> . arg
+    (47) init_block -> . arg COMMA
+    (48) init_block -> . init_block arg
+    (49) init_block -> . init_block arg COMMA
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    init_block                     shift and go to state 134
+    arg                            shift and go to state 135
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 133
+
+    (30) for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON . change_val RPAR block
+    (31) change_val -> . ID expr
+
+    ID              shift and go to state 137
+
+    change_val                     shift and go to state 136
+
+state 134
+
+    (45) array_init -> LCURL init_block . RCURL
+    (48) init_block -> init_block . arg
+    (49) init_block -> init_block . arg COMMA
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    RCURL           shift and go to state 138
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    ID              shift and go to state 50
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    arg                            shift and go to state 139
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 135
+
+    (46) init_block -> arg .
+    (47) init_block -> arg . COMMA
+
+    RCURL           reduce using rule 46 (init_block -> arg .)
+    NUMBER          reduce using rule 46 (init_block -> arg .)
+    STRING          reduce using rule 46 (init_block -> arg .)
+    VARIABLE_TYPE   reduce using rule 46 (init_block -> arg .)
+    ID              reduce using rule 46 (init_block -> arg .)
+    CUSTOM_FUNC     reduce using rule 46 (init_block -> arg .)
+    BUILD_IN        reduce using rule 46 (init_block -> arg .)
+    COMMA           shift and go to state 140
+
+
+state 136
+
+    (30) for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val . RPAR block
+
+    RPAR            shift and go to state 141
+
+
+state 137
+
+    (31) change_val -> ID . expr
+    (62) expr -> . fact
+    (63) expr -> . PLUSMINUS PLUSMINUS
+    (64) expr -> . expr PLUSMINUS fact
+    (65) expr -> . expr MOD fact
+    (66) expr -> . ID
+    (67) fact -> . term
+    (68) fact -> . fact DIVMUL term
+    (69) term -> . arg
+    (70) term -> . LPAR expr RPAR
+    (71) arg -> . NUMBER
+    (72) arg -> . STRING
+    (73) arg -> . VARIABLE_TYPE ID
+    (74) arg -> . VARIABLE_TYPE ID LCUADR RCUADR
+    (75) arg -> . ID LCUADR RCUADR
+    (76) arg -> . var_cal
+    (77) arg -> . NUMBER ID
+    (78) arg -> . func
+    (26) var_cal -> . ID LCUADR expr RCUADR
+    (55) func -> . CUSTOM_FUNC LPAR args RPAR
+    (56) func -> . ID LPAR args RPAR
+    (57) func -> . BUILD_IN LPAR args RPAR
+    (58) func -> . BUILD_IN output_operator
+
+    PLUSMINUS       shift and go to state 38
+    ID              shift and go to state 39
+    LPAR            shift and go to state 34
+    NUMBER          shift and go to state 42
+    STRING          shift and go to state 43
+    VARIABLE_TYPE   shift and go to state 33
+    CUSTOM_FUNC     shift and go to state 28
+    BUILD_IN        shift and go to state 29
+
+    expr                           shift and go to state 142
+    fact                           shift and go to state 37
+    term                           shift and go to state 40
+    arg                            shift and go to state 41
+    var_cal                        shift and go to state 44
+    func                           shift and go to state 45
+
+state 138
+
+    (45) array_init -> LCURL init_block RCURL .
+
+    SEMICOLON       reduce using rule 45 (array_init -> LCURL init_block RCURL .)
+
+
+state 139
+
+    (48) init_block -> init_block arg .
+    (49) init_block -> init_block arg . COMMA
+
+    RCURL           reduce using rule 48 (init_block -> init_block arg .)
+    NUMBER          reduce using rule 48 (init_block -> init_block arg .)
+    STRING          reduce using rule 48 (init_block -> init_block arg .)
+    VARIABLE_TYPE   reduce using rule 48 (init_block -> init_block arg .)
+    ID              reduce using rule 48 (init_block -> init_block arg .)
+    CUSTOM_FUNC     reduce using rule 48 (init_block -> init_block arg .)
+    BUILD_IN        reduce using rule 48 (init_block -> init_block arg .)
+    COMMA           shift and go to state 143
+
+
+state 140
+
+    (47) init_block -> arg COMMA .
+
+    RCURL           reduce using rule 47 (init_block -> arg COMMA .)
+    NUMBER          reduce using rule 47 (init_block -> arg COMMA .)
+    STRING          reduce using rule 47 (init_block -> arg COMMA .)
+    VARIABLE_TYPE   reduce using rule 47 (init_block -> arg COMMA .)
+    ID              reduce using rule 47 (init_block -> arg COMMA .)
+    CUSTOM_FUNC     reduce using rule 47 (init_block -> arg COMMA .)
+    BUILD_IN        reduce using rule 47 (init_block -> arg COMMA .)
+
+
+state 141
+
+    (30) for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR . block
+    (10) block -> . LCURL body RCURL
+
+    LCURL           shift and go to state 8
+
+    block                          shift and go to state 144
+
+state 142
+
+    (31) change_val -> ID expr .
+    (64) expr -> expr . PLUSMINUS fact
+    (65) expr -> expr . MOD fact
+
+    RPAR            reduce using rule 31 (change_val -> ID expr .)
+    PLUSMINUS       shift and go to state 68
+    MOD             shift and go to state 69
+
+
+state 143
+
+    (49) init_block -> init_block arg COMMA .
+
+    RCURL           reduce using rule 49 (init_block -> init_block arg COMMA .)
+    NUMBER          reduce using rule 49 (init_block -> init_block arg COMMA .)
+    STRING          reduce using rule 49 (init_block -> init_block arg COMMA .)
+    VARIABLE_TYPE   reduce using rule 49 (init_block -> init_block arg COMMA .)
+    ID              reduce using rule 49 (init_block -> init_block arg COMMA .)
+    CUSTOM_FUNC     reduce using rule 49 (init_block -> init_block arg COMMA .)
+    BUILD_IN        reduce using rule 49 (init_block -> init_block arg COMMA .)
+
+
+state 144
+
+    (30) for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .
+
+    RCURL           reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    RETURN          reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    BREAK           reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    CONTINUE        reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    VARIABLE_TYPE   reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    CUSTOM_FUNC     reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    ID              reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    BUILD_IN        reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    IF              reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    WHILE           reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    FOR             reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+    SEMICOLON       reduce using rule 30 (for_statement -> FOR LPAR init SEMICOLON condition SEMICOLON change_val RPAR block .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for VARIABLE_TYPE in state 0 resolved as shift
+WARNING: shift/reduce conflict for ID in state 42 resolved as shift
+WARNING: shift/reduce conflict for SEMICOLON in state 46 resolved as shift
+WARNING: shift/reduce conflict for RPAR in state 80 resolved as shift
+WARNING: shift/reduce conflict for LT in state 111 resolved as shift
+WARNING: reduce/reduce conflict in state 83 resolved using rule (assign -> ID EQUAL var_cal)
+WARNING: rejected rule (arg -> var_cal) in state 83
+WARNING: reduce/reduce conflict in state 85 resolved using rule (assign -> var_cal EQUAL var_cal)
+WARNING: rejected rule (arg -> var_cal) in state 85
+WARNING: reduce/reduce conflict in state 103 resolved using rule (init -> VARIABLE_TYPE ID EQUAL var_cal)
+WARNING: rejected rule (arg -> var_cal) in state 103
