@@ -52,6 +52,8 @@ int main()
     }
 
     cout << t;
+    int a = 10 + 4;
+    char b = 'a';
 
     return 0;
 }
@@ -210,7 +212,7 @@ def p_init(p):
     | VARIABLE_TYPE ID EQUAL var_cal
     | VARIABLE_TYPE ID LCUADR RCUADR EQUAL array_init"""
     if len(p) > 5:
-        p[0] = Node("init", [p[1], "[]", p[2], p[5], p[6]])
+        p[0] = Node("init", [p[1], p[2], "[]", p[5], p[6]])
     else:
         p[0] = Node("init", p[1:])
 
@@ -277,9 +279,9 @@ def p_expr(p):
         p[0] = p[1]
     elif len(p) == 3:
         if p[2] == "+":
-            p[0] = Node("assign", ["++"])
+            p[0] = Node("increment", ["++"])
         elif p[2] == "-":
-            p[0] = Node("assign", ["--"])
+            p[0] = Node("decrement", ["--"])
     else:
         p[0] = Node(p[2], [p[1], p[3]])
 
@@ -323,7 +325,7 @@ def p_error(p):
 
 def build_tree(code):
     parser = yacc.yacc()
-    return parser.parse(code, debug=True)
+    return parser.parse(code)
 
 
 if __name__ == "__main__":
