@@ -88,6 +88,21 @@ t_STRING = r'("(\\.|[^"])*")|(\'(\\.|[^\'])*\')'
 t_ignore = " \r\t\f"
 
 
+def t_comment_ignore(t):
+    r"/[*][^*]*[*]+([^/*][^*]*[*]+)*/|//[^\n]*"
+    pass
+
+
+def t_ignore_imports(t):
+    r"#include <.*>"
+    pass
+
+
+def t_ignore_namespace(t):
+    r"using namespace std;"
+    pass
+
+
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
@@ -138,7 +153,10 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-data = """void reverseArray(int arr[], int start, int end)
+data = """
+#include <iostream>
+using namespace std;
+void reverseArray(int arr[], int start, int end)
 {
     while (start < end)
     {
@@ -187,7 +205,8 @@ int main()
 
 lexer = lex.lex(reflags=re.UNICODE | re.DOTALL)
 
-if __name__ == "__main__":
+
+def display_tokens():
     tab = tt.Texttable()
     headings = ["Value (token)", "Tag", "Row", "Column"]
     tab.header(headings)
@@ -214,3 +233,7 @@ if __name__ == "__main__":
         )
     s = tab.draw()
     print(s)
+
+
+if __name__ == "__main__":
+    display_tokens()

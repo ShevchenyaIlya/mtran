@@ -325,15 +325,18 @@ def check_inits():
                 )
 
 
-if __name__ == "__main__":
-    tree = build_tree(data)
+def semantic_analysis(tree):
     parse_tree(tree)
 
-    if not functions.get("main", False):
-        raise Exception(
-            "Program should have starting point as function with name 'main'"
-        )
+    # if not functions.get("main", False):
+    #     raise Exception(
+    #         "Program should have starting point as function with name 'main'"
+    #     )
 
     check_inits()
-    print(tree)
     print(functions)
+
+
+if __name__ == "__main__":
+    tree = build_tree(data)
+    semantic_analysis(tree)

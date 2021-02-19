@@ -320,7 +320,7 @@ def p_arg(p):
 
 
 def p_error(p):
-    print("Unexpected token in line %d: %s" % (p.lineno, p))
+    raise Exception("Unexpected token in line %d: %s" % (p.lineno, p))
 
 
 def build_tree(code):
